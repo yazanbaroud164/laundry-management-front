@@ -1,0 +1,40 @@
+
+// /* src/app/components/customers/customer-detail/customer-detail.component.scss */
+// .customer-detail-container {
+//     margin: 20px;
+//     max-width: 800px;
+//     margin-left: auto;
+//     margin-right: auto;
+//   }
+  
+//   .full-width {
+//     width: 100%;
+//     margin-bottom: 15px;
+//   }
+  
+//   .button-row {
+//     display: flex;
+//     justify-content: flex-end;
+//     margin-top: 20px;
+//     gap: 10px;
+//   }
+
+.customer-detail-container {
+  margin: 20px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  direction: rtl; // added for Hebrew layout
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.button-row {
+  display: flex;
+  justify-content: flex-start; // reversed for RTL
+  margin-top: 20px;
+  gap: 10px;
+}

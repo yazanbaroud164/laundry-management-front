@@ -1,0 +1,260 @@
+// /* src/app/components/services/service-list/service-list.component.scss */
+// .service-list-container {
+//   margin: 20px;
+// }
+
+// .actions-container {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   margin-bottom: 20px;
+//   flex-wrap: wrap;
+//   gap: 10px;
+// }
+
+// .mat-form-field {
+//   width: 100%;
+//   max-width: 400px;
+// }
+
+// .table-container {
+//   width: 100%;
+//   overflow-x: auto; /* Enables horizontal scrolling on small screens */
+// }
+
+// table {
+//   width: 100%;
+//   min-width: 600px; /* Prevents excessive squeezing on small screens */
+// }
+
+// .mat-column-actions {
+//   width: 120px;
+// }
+
+// .mat-column-description {
+//   max-width: 300px;
+//   white-space: nowrap;
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+// }
+
+// /* Responsive styles */
+// @media screen and (max-width: 768px) {
+//   .actions-container {
+//     flex-direction: column;
+//     align-items: stretch;
+//   }
+  
+//   .mat-form-field {
+//     width: 100%;
+//     max-width: none;
+//   }
+  
+//   /* For mobile view when using column hiding */
+//   .mobile-label {
+//     display: none;
+//   }
+  
+//   /* Display labels for mobile when columns are hidden */
+//   .mobile-row-label {
+//     font-weight: bold;
+//     margin-right: 8px;
+//     min-width: 80px;
+//   }
+  
+//   .mobile-flex-cell {
+//     display: flex;
+//     flex-direction: column;
+//     padding: 10px 0;
+//   }
+  
+//   /* On small screens we can add padding within cells for better touch targets */
+//   .mat-cell {
+//     padding: 10px 5px;
+//   }
+// }
+
+// /* When using the stacked layout for mobile */
+// .mobile-stacked-card {
+//   margin-bottom: 16px;
+//   border-radius: 4px;
+//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+// }
+
+// .mobile-stacked-header {
+//   padding: 12px;
+//   background-color: #f5f5f5;
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+// }
+
+// .mobile-stacked-content {
+//   padding: 12px;
+// }
+
+// .mobile-stacked-row {
+//   display: flex;
+//   padding: 8px 0;
+//   border-bottom: 1px solid #eee;
+// }
+
+// .mobile-stacked-label {
+//   font-weight: 500;
+//   width: 130px;
+//   flex-shrink: 0;
+// }
+
+// .mobile-stacked-value {
+//   flex: 1;
+// }
+
+// .mobile-stacked-actions {
+//   margin-top: 12px;
+//   display: flex;
+//   justify-content: flex-end;
+// }
+
+/* src/app/components/services/service-list/service-list.component.scss */
+.service-list-container {
+  margin: 20px;
+  direction: rtl; /* Set RTL direction for Hebrew */
+  text-align: right;
+}
+
+.actions-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.mat-form-field {
+  width: 100%;
+  max-width: 400px;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto; /* Enables horizontal scrolling on small screens */
+}
+
+table {
+  width: 100%;
+  min-width: 600px; /* Prevents excessive squeezing on small screens */
+}
+
+.mat-column-actions {
+  width: 120px;
+}
+
+.mat-column-description {
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Flip icons for RTL */
+.mat-icon {
+  transform: scaleX(-1);
+}
+
+/* Don't flip certain icons */
+.mat-icon.no-flip {
+  transform: none;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+  .actions-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .mat-form-field {
+    width: 100%;
+    max-width: none;
+  }
+  
+  /* For mobile view when using column hiding */
+  .mobile-label {
+    display: none;
+  }
+  
+  /* Display labels for mobile when columns are hidden */
+  .mobile-row-label {
+    font-weight: bold;
+    margin-left: 8px; /* Changed from margin-right for RTL */
+    min-width: 80px;
+  }
+  
+  .mobile-flex-cell {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+  }
+  
+  /* On small screens we can add padding within cells for better touch targets */
+  .mat-cell {
+    padding: 10px 5px;
+  }
+}
+
+/* When using the stacked layout for mobile */
+.mobile-stacked-card {
+  margin-bottom: 16px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-stacked-header {
+  padding: 12px;
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mobile-stacked-content {
+  padding: 12px;
+}
+
+.mobile-stacked-row {
+  display: flex;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.mobile-stacked-label {
+  font-weight: 500;
+  width: 130px;
+  flex-shrink: 0;
+}
+
+.mobile-stacked-value {
+  flex: 1;
+}
+
+.mobile-stacked-actions {
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Hebrew text formatting */
+.hebrew-text {
+  font-family: 'Arial Hebrew', 'David', sans-serif;
+}
+
+/* Override Angular Material RTL specifics */
+[dir="rtl"] .mat-mdc-paginator-range-actions {
+  flex-direction: row-reverse;
+}
+
+/* Ensure RTL sorting icons alignment */
+[dir="rtl"] .mat-sort-header-container {
+  justify-content: flex-start;
+}

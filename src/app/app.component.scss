@@ -1,0 +1,11 @@
+/* src/app/app.component.scss */
+.main-content {
+    margin-top: 64px; /* Height of the toolbar */
+    padding: 20px;
+  }
+  
+  @media (max-width: 599px) {
+    .main-content {
+      margin-top: 56px; /* Toolbar height on small screens */
+    }
+  }

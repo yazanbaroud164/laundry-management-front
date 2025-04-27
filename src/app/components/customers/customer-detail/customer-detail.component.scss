@@ -1,0 +1,59 @@
+
+// /* src/app/components/customers/customer-detail/customer-detail.component.scss */
+// .customer-detail-container {
+//     margin: 20px;
+//     max-width: 800px;
+//     margin-left: auto;
+//     margin-right: auto;
+//   }
+  
+//   .full-width {
+//     width: 100%;
+//     margin-bottom: 15px;
+//   }
+  
+//   .button-row {
+//     display: flex;
+//     justify-content: flex-end;
+//     margin-top: 20px;
+//     gap: 10px;
+//   }
+
+.customer-detail-container {
+  margin: 20px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.rtl-container {
+  direction: rtl; /* Right-to-left direction for Hebrew */
+  text-align: right;
+}
+  
+.full-width {
+  width: 100%;
+  margin-bottom: 15px;
+}
+  
+.button-row {
+  display: flex;
+  justify-content: flex-start; /* For RTL layout */
+  margin-top: 20px;
+  gap: 10px;
+}
+
+/* Material RTL overrides */
+:host ::ng-deep {
+  .mat-mdc-form-field {
+    text-align: right;
+  }
+  
+  .mat-mdc-card-header {
+    justify-content: flex-start;
+  }
+  
+  .mat-mdc-card-title {
+    margin-right: 0;
+  }
+}

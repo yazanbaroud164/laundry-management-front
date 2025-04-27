@@ -1,0 +1,53 @@
+/* nav-bar.component.scss */
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+mat-toolbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  
+  /* Prevent horizontal scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* For RTL support */
+  button {
+    mat-icon {
+      margin-left: 8px;
+      margin-right: 0;
+    }
+  }
+}
+
+/* Adjust padding for smaller screens */
+@media (max-width: 599px) {
+  mat-toolbar {
+    padding: 0 8px;
+  }
+}
+
+/* For medium screens where we want to show buttons but with smaller text */
+@media (min-width: 600px) and (max-width: 959px) {
+  .nav-buttons button {
+    padding: 0 8px;
+    
+    .mat-icon {
+      margin-left: 4px;
+      margin-right: 0;
+    }
+  }
+}

@@ -1,0 +1,181 @@
+<div class="dashboard-container" dir="rtl">
+  <h1>לוח בקרה לניהול כביסה</h1>
+
+  <div *ngIf="loading">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+
+  <div class="dashboard-stats" *ngIf="!loading">
+    <mat-card class="stat-card">
+      <mat-card-header>
+        <div mat-card-avatar>
+          <mat-icon>people</mat-icon>
+        </div>
+        <mat-card-title>לקוחות</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h2>{{ totalCustomers }}</h2>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" routerLink="/customers">
+          צפה בכולם
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-header>
+        <div mat-card-avatar>
+          <mat-icon>receipt</mat-icon>
+        </div>
+        <mat-card-title>הזמנות</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h2>{{ totalOrders }}</h2>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" routerLink="/orders">
+          צפה בכולם
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-header>
+        <div mat-card-avatar>
+          <mat-icon>local_laundry_service</mat-icon>
+        </div>
+        <mat-card-title>שירותים</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h2>{{ totalServices }}</h2>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" routerLink="/services">
+          צפה בכולם
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-header>
+        <div mat-card-avatar>
+          <mat-icon>inventory</mat-icon>
+        </div>
+        <mat-card-title>מוצרים</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h2>{{ totalProducts }}</h2>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" routerLink="/products">
+          צפה בכולם
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div class="recent-orders" *ngIf="!loading">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>הזמנות אחרונות</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="table-container" *ngIf="!isMobile">
+          <table mat-table [dataSource]="recentOrders" class="mat-elevation-z0">
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef>מזהה</th>
+              <td mat-cell *matCellDef="let order">{{ order.id }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="customer">
+              <th mat-header-cell *matHeaderCellDef>לקוח</th>
+              <td mat-cell *matCellDef="let order">{{ order.customer?.name }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef>תאריך</th>
+              <td mat-cell *matCellDef="let order">
+                {{ order.orderDate | date }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>סטטוס</th>
+              <td mat-cell *matCellDef="let order">
+                <span class="status-badge" [ngStyle]="{'background-color': getStatusColor(order.status)}">
+                  {{ getStatusHebrew(order.status) }}
+                </span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef>סכום</th>
+              <td mat-cell *matCellDef="let order">
+                {{ order.totalAmount | currency:'ILS':'symbol':'1.2-2':'he' }}
+              </td>
+            </ng-container>
+
+            <tr
+              mat-header-row
+              *matHeaderRowDef="['id', 'customer', 'date', 'status', 'amount']"
+            ></tr>
+            <tr
+              mat-row
+              *matRowDef="
+                let row;
+                columns: ['id', 'customer', 'date', 'status', 'amount']
+              "
+              [routerLink]="['/orders', row.id]"
+            ></tr>
+          </table>
+
+          <div *ngIf="recentOrders.length === 0" class="no-data">
+            אין הזמנות זמינות
+          </div>
+        </div>
+
+        <div *ngIf="isMobile" class="mobile-list-container">
+          <div *ngFor="let order of recentOrders" class="mobile-stacked-card">
+            <div class="mobile-stacked-header">
+              <h3>הזמנה #{{ order.id }}</h3>
+              <span class="status-badge" [ngStyle]="{'background-color': getStatusColor(order.status)}">
+                {{ getStatusHebrew(order.status) }}
+              </span>
+            </div>
+            <div class="mobile-stacked-content">
+              <div class="mobile-stacked-row">
+                <div class="mobile-stacked-label">לקוח:</div>
+                <div class="mobile-stacked-value">{{ order.customer?.name }}</div>
+              </div>
+              <div class="mobile-stacked-row">
+                <div class="mobile-stacked-label">תאריך:</div>
+                <div class="mobile-stacked-value">{{ order.orderDate | date }}</div>
+              </div>
+              <div class="mobile-stacked-row">
+                <div class="mobile-stacked-label">סכום:</div>
+                <div class="mobile-stacked-value">{{ order.totalAmount | currency:'ILS':'symbol':'1.2-2':'he' }}</div>
+              </div>
+            </div>
+            <mat-card-actions>
+              <button mat-button color="primary" [routerLink]="['/orders', order.id]">צפה בפרטים</button>
+            </mat-card-actions>
+          </div>
+
+          <div *ngIf="recentOrders.length === 0" class="no-data-mobile">
+            <mat-card>
+              <mat-card-content>
+                אין הזמנות זמינות
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" routerLink="/orders">
+          צפה בכל ההזמנות
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
