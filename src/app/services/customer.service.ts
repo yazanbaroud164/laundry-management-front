@@ -7,7 +7,7 @@ import { HttpClient, HttpClientModule  } from '@angular/common/http';
   providedIn: 'root',
 })
 export class CustomerService {
-  private apiUrl = 'http://10.0.0.6:5213/api/Customer/';
+  private apiUrl = 'https://laundryback.onrender.com/api/Customer/';
 
   constructor(private http: HttpClient) { }
 

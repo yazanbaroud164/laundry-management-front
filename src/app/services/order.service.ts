@@ -9,7 +9,7 @@ import { Order } from '../models/order.model';
 })
 export class OrderService {
   // private orderUrl = 'api/Order';
-  private orderUrl = 'http://10.0.0.6:5213/api/Order/';
+  private orderUrl = 'https://laundryback.onrender.com/api/Order/';
   private orderItemUrl = 'api/OrderItem';
 
   constructor(private http: HttpClient) {}

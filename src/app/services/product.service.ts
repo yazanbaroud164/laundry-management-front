@@ -7,7 +7,7 @@ import { Product } from '../models/product.model';
   providedIn: 'root',
 })
 export class ProductService {
-  private apiUrl = 'http://10.0.0.6:5213/api/Product/';
+  private apiUrl = 'https://laundryback.onrender.com/api/Product/';
 
   constructor(private http: HttpClient) {}
 
