@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OrderItem } from '../models/order-item.model';
 import { Order } from '../models/order.model';
+import { OrderImage } from '../models/order-image.model';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +33,18 @@ export class OrderService {
 
   deleteOrder(id: number | undefined): Observable<any> {
     return this.http.delete(`${this.orderUrl + 'DeleteOrder'}/${id}`);
+  }
+
+  getOrderImages(orderId: number): Observable<OrderImage[]> {
+    return this.http.get<OrderImage[]>(this.orderUrl + `${orderId}/images`);
+  }
+  
+  deleteImage(imageId: number): Observable<void> {
+    return this.http.delete<void>(this.orderUrl + `images/${imageId}`);
+  }
+
+  uploadImages(orderId?: number, formData?: FormData): Observable<any> {
+    return this.http.post(this.orderUrl + `${orderId}/images`, formData)
   }
 
   // Order Item methods

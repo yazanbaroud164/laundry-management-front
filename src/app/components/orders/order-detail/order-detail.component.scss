@@ -1,4 +1,134 @@
-/* order-form.component.scss */
+// /* order-form.component.scss */
+// .order-form-container {
+//   padding: 20px;
+//   max-width: 1200px;
+//   margin: 0 auto;
+//   direction: rtl;
+//   text-align: right;
+// }
+
+// .form-row {
+//   display: flex;
+//   gap: 16px;
+//   margin-bottom: 16px;
+  
+//   &.two-columns {
+//     & > * {
+//       flex: 1;
+//     }
+//   }
+// }
+
+// .full-width {
+//   width: 100%;
+// }
+
+// .section-header {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   margin-bottom: 16px;
+//   margin-top: 24px;
+  
+//   h3 {
+//     margin: 0;
+//   }
+// }
+
+// .order-item {
+//   background-color: #f9f9f9;
+//   padding: 16px;
+//   border-radius: 4px;
+//   margin-bottom: 16px;
+// }
+
+// .item-row {
+//   display: flex;
+//   gap: 12px;
+//   align-items: flex-start;
+  
+//   .service-field {
+//     flex: 3;
+//   }
+  
+//   .quantity-field {
+//     flex: 1;
+//     min-width: 80px;
+//   }
+  
+//   .price-field {
+//     flex: 1;
+//     min-width: 100px;
+//   }
+  
+//   .total-field {
+//     flex: 1;
+//     min-width: 120px;
+//   }
+// }
+
+// .order-total {
+//   text-align: left; /* Flipped for RTL */
+//   margin: 24px 0;
+  
+//   h3 {
+//     font-weight: 500;
+//   }
+// }
+
+// .form-actions {
+//   display: flex;
+//   justify-content: flex-start; /* Flipped for RTL */
+//   gap: 16px;
+//   margin-top: 24px;
+// }
+
+// /* Fix autocomplete and dropdown alignment for RTL */
+// ::ng-deep .mat-mdc-form-field .mat-mdc-select-arrow,
+// ::ng-deep .mat-mdc-form-field .mat-datepicker-toggle {
+//   transform: rotate(180deg);
+// }
+
+// /* Fix buttons icon alignment */
+// ::ng-deep .mat-mdc-button-touch-target {
+//   direction: ltr;
+// }
+
+// /* Responsive adjustments */
+// @media (max-width: 768px) {
+//   .form-row.two-columns {
+//     flex-direction: column;
+//   }
+  
+//   .item-row {
+//     flex-wrap: wrap;
+    
+//     .service-field {
+//       flex: 1 1 100%;
+//     }
+    
+//     .quantity-field,
+//     .price-field,
+//     .total-field {
+//       flex: 1 1 30%;
+//     }
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .order-form-container {
   padding: 20px;
   max-width: 1200px;
@@ -83,6 +213,60 @@
   margin-top: 24px;
 }
 
+/* Image Gallery Styles */
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
+
+.image-container {
+  width: 150px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.image-preview {
+  height: 150px;
+  position: relative;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .remove-image {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background-color: rgba(255, 255, 255, 0.7);
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    
+    mat-icon {
+      font-size: 18px;
+      line-height: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+.image-caption {
+  padding: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+  text-align: center;
+}
+
 /* Fix autocomplete and dropdown alignment for RTL */
 ::ng-deep .mat-mdc-form-field .mat-mdc-select-arrow,
 ::ng-deep .mat-mdc-form-field .mat-datepicker-toggle {
@@ -112,5 +296,9 @@
     .total-field {
       flex: 1 1 30%;
     }
+  }
+  
+  .image-gallery {
+    justify-content: center;
   }
 }

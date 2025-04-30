@@ -1,4 +1,3 @@
-<!-- order-form.component.html -->
 <div class="order-form-container">
   <mat-card>
     <mat-card-header>
@@ -7,7 +6,6 @@
     
     <mat-card-content>
       <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
-        <!-- Customer Selection -->
         <div class="form-row">
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>לקוח</mat-label>
@@ -29,7 +27,6 @@
           </mat-form-field>
         </div>
 
-        <!-- Order Date and Status -->
         <div class="form-row two-columns">
           <mat-form-field appearance="outline">
             <mat-label>תאריך הזמנה</mat-label>
@@ -54,7 +51,40 @@
           </mat-form-field>
         </div>
 
-        <!-- Order Items Section -->
+        <div class="images-section">
+          <div class="section-header">
+            <h3>תמונות הזמנה</h3>
+            <button type="button" 
+                    mat-raised-button 
+                    color="primary" 
+                    (click)="fileInput.click()">
+              <mat-icon>add_photo_alternate</mat-icon> הוספת תמונות
+            </button>
+            <input hidden 
+                   type="file" 
+                   accept="image/*" 
+                   multiple 
+                   #fileInput 
+                   (change)="onFileSelected($event)">
+          </div>
+
+          <div class="image-gallery" *ngIf="selectedFiles.length > 0">
+            <div class="image-container" *ngFor="let file of selectedFiles; let i = index">
+              <div class="image-preview">
+                <img [src]="file.data" alt="תמונת הזמנה">
+                <button type="button" 
+                        mat-icon-button 
+                        color="warn" 
+                        class="remove-image" 
+                        (click)="removeImage(file,i)">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+              <div class="image-caption">{{ file.fileName }}</div>
+            </div>
+          </div>
+        </div>
+
         <div class="order-items-section">
           <div class="section-header">
             <h3>פריטי הזמנה</h3>
@@ -129,12 +159,10 @@
           </div>
         </div>
 
-        <!-- Order Total -->
         <div class="order-total">
           <h3>סכום כולל: {{ orderForm.get('totalAmount')?.value | currency:'ILS':'symbol':'1.2-2':'he' }}</h3>
         </div>
 
-        <!-- Form Actions -->
         <div class="form-actions">
           <button type="button" mat-stroked-button (click)="cancel()">ביטול</button>
           <button type="submit" mat-raised-button color="primary">{{ isEditMode ? 'עדכון' : 'יצירת' }} הזמנה</button>
@@ -144,3 +172,368 @@
     </mat-card-content>
   </mat-card>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="order-form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ isEditMode ? 'עריכת הזמנה' : 'יצירת הזמנה חדשה' }}</mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>לקוח</mat-label>
+            <input type="text" 
+                   matInput 
+                   formControlName="customerSearch" 
+                   [matAutocomplete]="customerAuto" 
+                   placeholder="חיפוש לקוח לפי שם, אימייל או טלפון">
+            <mat-error *ngIf="orderForm?.get('customerId')?.hasError('required')">
+              בחירת לקוח הינה חובה
+            </mat-error>
+            <mat-autocomplete #customerAuto="matAutocomplete" 
+                              [displayWith]="displayCustomer"
+                              (optionSelected)="selectCustomer($event)">
+              <mat-option *ngFor="let customer of filteredCustomers | async" [value]="customer">
+                {{ customer.name }} - {{ customer.phone }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row two-columns">
+          <mat-form-field appearance="outline">
+            <mat-label>תאריך הזמנה</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="orderDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="orderForm?.get('orderDate')?.hasError('required')">
+              תאריך הינו חובה
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>סטטוס</mat-label>
+            <mat-select formControlName="status">
+              <mat-option *ngFor="let status of statusOptions" [value]="status">
+                {{ getStatusTranslation(status) }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="orderForm?.get('status')?.hasError('required')">
+              סטטוס הינו חובה
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="images-section">
+          <div class="section-header">
+            <h3>תמונות הזמנה</h3>
+            <button type="button" 
+                    mat-raised-button 
+                    color="primary" 
+                    (click)="fileInput.click()">
+              <mat-icon>add_photo_alternate</mat-icon> הוספת תמונות
+            </button>
+            <input hidden 
+                   type="file" 
+                   accept="image/*" 
+                   multiple 
+                   #fileInput 
+                   (change)="onFileSelected($event)">
+          </div>
+
+          <div class="image-gallery" *ngIf="selectedFiles.length > 0">
+            <div class="image-container" *ngFor="let file of selectedFiles; let i = index">
+              <div class="image-preview">
+                <img [src]="file.preview" alt="תמונת הזמנה">
+                <button type="button" 
+                        mat-icon-button 
+                        color="warn" 
+                        class="remove-image" 
+                        (click)="removeImage(i)">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+              <div class="image-caption">{{ file.name }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="order-items-section">
+          <div class="section-header">
+            <h3>פריטי הזמנה</h3>
+            <button type="button" mat-raised-button color="primary" (click)="addOrderItem()">
+              <mat-icon>add</mat-icon> הוספת פריט
+            </button>
+          </div>
+
+          <div formArrayName="orderItems">
+            <div *ngFor="let item of orderItemsArray.controls; let i = index" 
+                 [formGroupName]="i" 
+                 class="order-item">
+              
+              <div class="item-row">
+                <mat-form-field appearance="outline" class="service-field">
+                  <mat-label>שירות</mat-label>
+                  <input type="text" 
+                         matInput 
+                         formControlName="serviceSearch" 
+                         [matAutocomplete]="serviceAuto" 
+                         placeholder="חיפוש שירות">
+                  <mat-error *ngIf="item.get('serviceId')?.hasError('required')">
+                    שירות הינו חובה
+                  </mat-error>
+                  <mat-autocomplete #serviceAuto="matAutocomplete" 
+                                    [displayWith]="displayService"
+                                    (optionSelected)="selectService($event, i)">
+                    <mat-option *ngFor="let service of getFilteredServices(i) | async" 
+                                [value]="service">
+                      {{ service.name }} - {{ service.price | currency:'ILS':'symbol':'1.2-2':'he' }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="quantity-field">
+                  <mat-label>כמות</mat-label>
+                  <input type="number" 
+                         matInput 
+                         formControlName="quantity" 
+                         min="1" 
+                         (change)="onQuantityChange()">
+                  <mat-error *ngIf="item.get('quantity')?.hasError('required') || item.get('quantity')?.hasError('min')">
+                    יש להזין כמות תקינה
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="price-field">
+                  <mat-label>מחיר ליחידה</mat-label>
+                  <input type="number" 
+                         matInput 
+                         formControlName="price" 
+                         min="0"
+                         (change)="onQuantityChange()">
+                  <mat-error *ngIf="item.get('price')?.hasError('required') || item.get('price')?.hasError('min')">
+                    יש להזין מחיר תקין
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="total-field">
+                  <mat-label>סה"כ</mat-label>
+                  <input type="text" 
+                         matInput 
+                         [value]="(item.get('quantity')?.value || 0) * (item.get('price')?.value || 0) | currency:'ILS':'symbol':'1.2-2':'he'" 
+                         readonly>
+                </mat-form-field>
+
+                <button type="button" 
+                        mat-icon-button 
+                        color="warn" 
+                        (click)="removeOrderItem(i)"
+                        *ngIf="orderItemsArray.length > 1">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="order-total">
+          <h3>סכום כולל: {{ orderForm.get('totalAmount')?.value | currency:'ILS':'symbol':'1.2-2':'he' }}</h3>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" mat-stroked-button (click)="cancel()">ביטול</button>
+          <button type="submit" mat-raised-button color="primary">{{ isEditMode ? 'עדכון' : 'יצירת' }} הזמנה</button>
+        </div>
+        
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div> -->
+
+
+<!-- order-form.component.html -->
+<!-- <div class="order-form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ isEditMode ? 'עריכת הזמנה' : 'יצירת הזמנה חדשה' }}</mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>לקוח</mat-label>
+            <input type="text" 
+                   matInput 
+                   formControlName="customerSearch" 
+                   [matAutocomplete]="customerAuto" 
+                   placeholder="חיפוש לקוח לפי שם, אימייל או טלפון">
+            <mat-error *ngIf="orderForm?.get('customerId')?.hasError('required')">
+              בחירת לקוח הינה חובה
+            </mat-error>
+            <mat-autocomplete #customerAuto="matAutocomplete" 
+                              [displayWith]="displayCustomer"
+                              (optionSelected)="selectCustomer($event)">
+              <mat-option *ngFor="let customer of filteredCustomers | async" [value]="customer">
+                {{ customer.name }} - {{ customer.phone }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row two-columns">
+          <mat-form-field appearance="outline">
+            <mat-label>תאריך הזמנה</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="orderDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="orderForm?.get('orderDate')?.hasError('required')">
+              תאריך הינו חובה
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>סטטוס</mat-label>
+            <mat-select formControlName="status">
+              <mat-option *ngFor="let status of statusOptions" [value]="status">
+                {{ getStatusTranslation(status) }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="orderForm?.get('status')?.hasError('required')">
+              סטטוס הינו חובה
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="images-section">
+          <div class="section-header">
+            <h3>תמונות הזמנה</h3>
+            <button type="button" 
+                    mat-raised-button 
+                    color="primary" 
+                    (click)="fileInput.click()">
+              <mat-icon>add_photo_alternate</mat-icon> הוספת תמונות
+            </button>
+            <input hidden 
+                   type="file" 
+                   accept="image/*" 
+                   multiple 
+                   #fileInput 
+                   (change)="onFileSelected($event)">
+          </div>
+
+          <div class="image-gallery" *ngIf="selectedFiles.length > 0">
+            <div class="image-container" *ngFor="let file of selectedFiles; let i = index">
+              <div class="image-preview">
+                <img [src]="file.preview" alt="תמונת הזמנה">
+                <button type="button" 
+                        mat-icon-button 
+                        color="warn" 
+                        class="remove-image" 
+                        (click)="removeImage(i)">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+              <div class="image-caption">{{ file.name }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="order-items-section">
+          <div class="section-header">
+            <h3>פריטי הזמנה</h3>
+            <button type="button" mat-raised-button color="primary" (click)="addOrderItem()">
+              <mat-icon>add</mat-icon> הוספת פריט
+            </button>
+          </div>
+
+          <div formArrayName="orderItems">
+            <div *ngFor="let item of orderItemsArray.controls; let i = index" 
+                 [formGroupName]="i" 
+                 class="order-item">
+              
+              <div class="item-row">
+                <mat-form-field appearance="outline" class="service-field">
+                  <mat-label>שירות</mat-label>
+                  <input type="text" 
+                         matInput 
+                         formControlName="serviceSearch" 
+                         [matAutocomplete]="serviceAuto" 
+                         placeholder="חיפוש שירות">
+                  <mat-error *ngIf="item.get('serviceId')?.hasError('required')">
+                    שירות הינו חובה
+                  </mat-error>
+                  <mat-autocomplete #serviceAuto="matAutocomplete" 
+                                    [displayWith]="displayService"
+                                    (optionSelected)="selectService($event, i)">
+                    <mat-option *ngFor="let service of getFilteredServices(i) | async" 
+                                [value]="service">
+                      {{ service.name }} - {{ service.price | currency:'ILS':'symbol':'1.2-2':'he' }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="quantity-field">
+                  <mat-label>כמות</mat-label>
+                  <input type="number" 
+                         matInput 
+                         formControlName="quantity" 
+                         min="1" 
+                         (change)="onQuantityChange()">
+                  <mat-error *ngIf="item.get('quantity')?.hasError('required') || item.get('quantity')?.hasError('min')">
+                    יש להזין כמות תקינה
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="price-field">
+                  <mat-label>מחיר</mat-label>
+                  <input type="number" 
+                         matInput 
+                         formControlName="price" 
+                         min="0"
+                         (change)="onQuantityChange()">
+                  <mat-error *ngIf="item.get('price')?.hasError('required') || item.get('price')?.hasError('min')">
+                    יש להזין מחיר תקין
+                  </mat-error>
+                </mat-form-field>
+
+                <button type="button" 
+                        mat-icon-button 
+                        color="warn" 
+                        (click)="removeOrderItem(i)"
+                        *ngIf="orderItemsArray.length > 1">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="order-total">
+          <h3>סכום כולל: {{ orderForm.get('totalAmount')?.value | currency:'ILS':'symbol':'1.2-2':'he' }}</h3>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" mat-stroked-button (click)="cancel()">ביטול</button>
+          <button type="submit" mat-raised-button color="primary">{{ isEditMode ? 'עדכון' : 'יצירת' }} הזמנה</button>
+        </div>
+        
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div> -->

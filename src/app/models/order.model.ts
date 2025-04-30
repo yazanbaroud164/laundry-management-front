@@ -1,4 +1,5 @@
 import { Customer } from './customer.model';
+import { OrderImage } from './order-image.model';
 import { OrderItem } from './order-item.model';
 
 export interface Order {
@@ -9,5 +10,6 @@ export interface Order {
   status: string;
   totalAmount: number;
   orderItems: OrderItem[];
+  orderImages?: OrderImage[];
 }
 
