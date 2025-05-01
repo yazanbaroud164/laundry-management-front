@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { OrderItem } from '../models/order-item.model';
 import { Order } from '../models/order.model';
 import { OrderImage } from '../models/order-image.model';
@@ -29,6 +29,10 @@ export class OrderService {
 
   updateOrder(id: number | undefined, order: Order): Observable<any> {
     return this.http.put(`${this.orderUrl + 'UpdateOrder'}/${id}`, order);
+  }
+
+  updateStatusOrder(id: number | undefined, status: string): Observable<any> {
+    return this.http.put(`${this.orderUrl + 'UpdateStatusOrder'}/${id}`, {status});
   }
 
   deleteOrder(id: number | undefined): Observable<any> {

@@ -238,7 +238,7 @@
           <ng-container matColumnDef="date">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>תאריך</th>
             <td mat-cell *matCellDef="let order">
-              {{ order.orderDate | date : "medium" }}
+              {{ order.orderDate | date : 'medium' : undefined : 'he-IL' }}
             </td>
           </ng-container>
 

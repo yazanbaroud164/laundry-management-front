@@ -213,7 +213,7 @@ export class OrderListComponent implements OnInit {
   ];
   dataSource = new MatTableDataSource<Order>([]);
   filteredData: Order[] = []; // For mobile view
-  statusOptions = ['ממתין' , 'חדש', 'בתהליך', 'מוכן', 'הושלם', 'בוטל'];
+  statusOptions = ['ממתין', 'חדש', 'בתהליך', 'מוכן', 'הושלם', 'בוטל'];
   statusMap = {
     ממתין: 'Pending',
     חדש: 'New',
@@ -271,8 +271,13 @@ export class OrderListComponent implements OnInit {
   loadOrders(): void {
     this.orderService.getOrders().subscribe({
       next: (orders) => {
-        this.dataSource.data = orders;
-        this.filteredData = orders;
+
+        this.filteredData = orders.map((order) => ({
+          ...order,
+          orderDate: new Date(new Date(order.orderDate).getTime() + (new Date(order.orderDate).getTimezoneOffset() * -60000))
+        }));
+
+        this.dataSource.data = this.filteredData;
       },
       error: (error) => {
         console.error('שגיאה בטעינת הזמנות', error);
@@ -303,11 +308,11 @@ export class OrderListComponent implements OnInit {
 
   updateStatus(order: Order, newHebrewStatus: string): void {
     // Convert Hebrew status to English for backend
-    const newStatus =
+    const status =
       this.statusMap[newHebrewStatus as keyof typeof this.statusMap];
-    const updatedOrder = { ...order, status: newStatus };
+    // const updatedOrder = { ...order, status: newStatus };
 
-    this.orderService.updateOrder(order.id, updatedOrder).subscribe({
+    this.orderService.updateStatusOrder(order.id, status).subscribe({
       next: () => {
         this.loadOrders();
         this.snackBar.open(`סטטוס ההזמנה עודכן ל${newHebrewStatus}`, 'סגור', {
@@ -344,7 +349,7 @@ export class OrderListComponent implements OnInit {
 
   getStatusColor(status: string): string {
     console.log(status);
-    
+
     switch (status) {
       case 'Pending':
       case 'ממתין':
