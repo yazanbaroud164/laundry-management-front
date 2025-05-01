@@ -1,0 +1,178 @@
+// :host {
+//   display: block;
+// }
+
+// .mat-dialog-title {
+//   margin: 0 0 16px;
+//   color: #2c3e50;
+//   font-weight: 500;
+// }
+
+// .mat-dialog-content {
+//   padding: 0;
+//   margin-bottom: 16px;
+//   display: flex;
+//   flex-direction: column;
+//   gap: 16px;
+// }
+
+// .full-width {
+//   width: 100%;
+// }
+
+// .mat-dialog-actions {
+//   margin-bottom: 0;
+//   padding: 8px 0;
+//   display: flex;
+//   gap: 12px;
+
+//   button {
+//     min-width: 88px;
+//     font-weight: 500;
+//   }
+// }
+
+// // Responsive styling
+// @media (max-width: 599px) {
+//   :host {
+//     width: 100%;
+//   }
+
+//   .mat-dialog-content {
+//     max-height: none;
+//   }
+// }
+
+// @media (min-width: 600px) {
+//   :host {
+//     width: 450px;
+//   }
+// }
+
+// // RTL specific adjustments
+// [dir="rtl"] {
+//   .mat-dialog-actions {
+//     button:first-child {
+//       margin-left: 8px;
+//       margin-right: 0;
+//     }
+//   }
+
+//   .mat-form-field {
+//     text-align: right;
+//   }
+// }
+
+:host {
+    display: block;
+    
+    ::ng-deep {
+      .mat-dialog-container {
+        padding: 24px;
+        border-radius: 8px;
+        overflow: visible;
+      }
+    }
+  }
+  
+  .customer-dialog {
+    overflow: visible;
+  }
+  
+  .mat-dialog-title {
+    margin: 0 0 16px;
+    color: #2c3e50;
+    font-weight: 500;
+    padding: 0 8px;
+  }
+  
+  .mat-dialog-content {
+    padding: 8px 16px 16px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .full-width {
+    width: 100%;
+    
+    // Improve label visibility when focused
+    .mat-form-field-label {
+      transition: transform 150ms ease-out;
+    }
+    
+    &.mat-focused .mat-form-field-label {
+      transform: translateY(-1.5em) scale(0.75);
+    }
+    
+    // Add some space around the input to prevent label clipping
+    .mat-form-field-wrapper {
+      padding-top: 8px;
+    }
+    
+    // Ensure proper spacing for the floating label
+    .mat-form-field-infix {
+      padding: 0.75em 0;
+      border-top: 0.84375em solid transparent;
+    }
+  }
+  
+  .mat-dialog-actions {
+    margin-bottom: 0;
+    padding: 8px 0;
+    display: flex;
+    gap: 12px;
+    
+    button {
+      min-width: 88px;
+      font-weight: 500;
+    }
+  }
+  
+  // Responsive styling
+  // Add container for each input field for better spacing
+  .input-container {
+    margin-bottom: 8px;
+    padding: 8px 0;
+  }
+  
+  .form-content {
+    overflow: visible !important;
+  }
+  
+  @media (max-width: 599px) {
+    :host {
+      width: 100%;
+    }
+    
+    .mat-dialog-content {
+      max-height: none;
+      padding-top: 16px;
+    }
+    
+    // Additional spacing for mobile
+    .input-container {
+      padding: 12px 0;
+    }
+  }
+  
+  @media (min-width: 600px) {
+    :host {
+      width: 450px;
+    }
+  }
+  
+  // RTL specific adjustments
+  [dir="rtl"] {
+    .mat-dialog-actions {
+      button:first-child {
+        margin-left: 8px;
+        margin-right: 0;
+      }
+    }
+    
+    .mat-form-field {
+      text-align: right;
+    }
+  }
